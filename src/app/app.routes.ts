@@ -9,4 +9,5 @@ export const routes: Routes = [
   { path: 'editar/:id', component: FormRecetaComponent },
   { path: 'favoritos', component: ListaRecetasComponent },
   { path: '**', redirectTo: 'inicio' }
+  
 ];
