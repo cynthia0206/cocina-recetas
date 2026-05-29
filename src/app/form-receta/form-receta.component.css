@@ -1,13 +1,13 @@
 .form-container {
   max-width: 750px;
   margin: 0 auto;
-  padding: 20px 0 40px 0;
+  padding: 20px 16px 40px 16px;
 }
 
 .form-card {
   background-color: #ffffff;
   border-radius: 16px;
-  padding: 40px;
+  padding: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -59,6 +59,7 @@
   transition: all 0.3s ease;
   outline: none;
   box-sizing: border-box;
+  min-height: 44px;
 }
 
 .form-control:focus {
@@ -73,6 +74,7 @@ textarea.form-control {
 .form-row {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .flex-1 {
@@ -123,6 +125,8 @@ textarea.form-control {
 .form-actions {
   display: flex;
   gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   border-top: 2px solid #f7fafc;
   padding-top: 25px;
 }
@@ -130,4 +134,32 @@ textarea.form-control {
 .form-actions .btn {
   padding: 12px 28px;
   font-size: 1rem;
+}
+
+.form-control.is-invalid {
+  border-color: #e53e3e;
+}
+
+.form-control.is-invalid:focus {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+}
+
+@media (max-width: 760px) {
+  .form-card {
+    padding: 24px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
 }

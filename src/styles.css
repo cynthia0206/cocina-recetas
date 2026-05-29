@@ -6,11 +6,16 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: #2d3748;
   background-color: #f8fafc;
   line-height: 1.5;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -33,11 +38,17 @@ body {
   transition: all 0.25s ease;
   text-decoration: none;
   outline: none;
+  min-height: 44px;
 }
 
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(230, 126, 34, 0.7);
+  outline-offset: 2px;
 }
 
 .btn-primary {

@@ -255,10 +255,11 @@ export const routes: Routes = [
     </ul>
 
     <h3>2. Componente <code>form-receta</code></h3>
-    <p>Formulario para registrar o editar información culinaria.</p>
+    <p>Formulario para registrar o editar información culinaria mediante Formularios Reactivos.</p>
     <ul>
-      <li><strong>Formulario Dinámico:</strong> Evalúa la ruta para detectar si tiene una variable <code>id</code>. Si existe, cambia a modo "Edición" y precarga los campos con los datos de la receta para modificarlos. Si no, se inicializa como un formulario de "Creación".</li>
-      <li><strong>Área de Texto Inteligente:</strong> Para facilitar la escritura del usuario, las listas de ingredientes e instrucciones se ingresan en cuadros de texto multilínea (un elemento por línea). Al guardar, el componente los formatea a un arreglo de cadenas <code>string[]</code> mediante funciones <code>split('\n')</code> y <code>trim()</code>.</li>
+      <li><strong>Formularios Reactivos (Reactive Forms):</strong> Implementa <code>ReactiveFormsModule</code> e inyecta <code>FormBuilder</code> para definir un objeto <code>FormGroup</code> con validadores específicos para cada input en el controlador.</li>
+      <li><strong>Validaciones robustas:</strong> El nombre y la descripción requieren mínimos de caracteres (3 y 10 respectivamente); el tiempo de preparación tiene un validador mínimo de 1; la URL de la imagen se comprueba con una expresión regular (Regex) de enlace web.</li>
+      <li><strong>Carga y procesamiento dinámicos:</strong> En modo edición, utiliza <code>patchValue()</code> para poblar los campos desde <code>RecetaService</code>. Al guardar, procesa los ingredientes e instrucciones separándolos línea por línea con <code>split('\n')</code>.</li>
     </ul>
 
     <h3>3. Componente <code>detalle-receta</code></h3>
