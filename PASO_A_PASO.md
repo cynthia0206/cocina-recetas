@@ -114,10 +114,16 @@ export const routes: Routes = [
 ### 2. Componente: `form-receta`
 *   **Archivos:** `form-receta.component.ts`, `form-receta.component.html`, `form-receta.component.css`
 *   **Lógica:**
-    *   Funciona de manera híbrida para **Creación** y **Edición**. En `ngOnInit()` intenta obtener el parámetro de ruta `:id`. Si existe, solicita los datos de la receta al servicio y los precarga en el formulario (activando el modo edición); si no existe, inicializa un formulario vacío para creación.
-    *   Facilita la entrada de datos: posee un campo de selección desplegable para categorías (`Desayuno`, `Entrada`, `Almuerzo`, `Cena`, `Postre`, `Bebida`, `Otro`) y entradas de texto multilínea (`textarea`) para ingredientes e instrucciones.
-    *   **Procesamiento de texto:** Al guardar la receta, el componente divide los textos de ingredientes e instrucciones línea por línea (`split('\n')`), elimina espacios en blanco al inicio/final de cada línea (`trim()`), y descarta líneas vacías, convirtiéndolos en arreglos estructurados (`string[]`) de forma transparente para el usuario.
-    *   Valida que los campos obligatorios estén llenos y que se ingrese al menos un ingrediente y un paso antes de permitir guardar la información.
+    *   **Formularios Reactivos:** Utiliza `ReactiveFormsModule` e inyecta `FormBuilder` para definir un `FormGroup` robusto que asocia los controles del formulario y valida los campos dinámicamente.
+    *   **Validaciones Incorporadas:**
+        *   `nombre`: Requerido y mínimo 3 caracteres de longitud.
+        *   `descripcion`: Requerido y mínimo 10 caracteres de longitud.
+        *   `tiempoPreparacion`: Requerido y valor numérico mínimo de 1.
+        *   `categoria`: Requerido.
+        *   `imagenUrl`: Validación mediante expresión regular (Regex) para asegurar que sea un formato URL válido de internet.
+        *   `ingredientesInput` e `instruccionesInput`: Requeridos.
+    *   **Híbrido de Creación y Edición:** Lee el parámetro `:id` en la ruta activa. Si está presente, consulta los datos con el servicio y carga el formulario usando `patchValue()`. En caso contrario, inicia el formulario con valores por defecto.
+    *   **Procesamiento de texto:** Al guardar la receta, el componente lee las áreas de texto y divide los ingredientes e instrucciones línea por línea (`split('\n')`), limpiando espacios en blanco (`trim()`) y descartando líneas vacías para convertirlos en arreglos de cadenas (`string[]`) inyectables al modelo.
 
 ### 3. Componente: `detalle-receta`
 *   **Archivos:** `detalle-receta.component.ts`, `detalle-receta.component.html`, `detalle-receta.component.css`

@@ -96,10 +96,11 @@ export const routes: Routes = [
    - Cuenta con botones para alternar favoritos, borrar o ver preparacion.
 
 2. form-receta:
-   - Funciona para agregar una receta nueva o editar una existente.
-   - En edicion carga los datos anteriores en el formulario basandose en el ID de la ruta.
-   - Los ingredientes y pasos se escriben en textareas (uno por linea) y se dividen
-     en un arreglo (array) string[] de forma automatica en TypeScript mediante split('\n').
+   - Utiliza Formularios Reactivos (Reactive Forms) con validadores integrados (FormBuilder).
+   - Validaciones: Nombre (min 3 caracteres), descripcion (min 10), tiempo de preparacion (min 1 minuto),
+     imagenUrl (validado con Regex para URL valida) e ingredientes/instrucciones obligatorios.
+   - En edicion carga datos con patchValue() basandose en el ID de la ruta.
+   - Procesa los ingredientes/instrucciones escritos en textareas convirtiendolos en arreglos usando split('\n').
 
 3. detalle-receta:
    - Diseñado como modal/overlay que aparece superpuesto.
