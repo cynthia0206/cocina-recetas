@@ -1,0 +1,155 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2>{{ esEdicion ? 'Editar Receta' : 'Nueva Receta Culinaria' }}</h2>
+      <p class="subtitle">{{ esEdicion ? 'Actualiza los ingredientes, tiempos o pasos de esta receta.' : 'Llena el formulario para compartir y registrar tu creación gastronómica.' }}</p>
+    </div>
+
+    <form (ngSubmit)="guardarReceta()" #recetaForm="ngForm">
+      
+      <!-- Fila de Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre de la Receta <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="nombre" 
+          name="nombre" 
+          [(ngModel)]="nombre" 
+          required 
+          placeholder="Ej. Lasaña Boloñesa Clásica"
+          class="form-control"
+          #nombreInput="ngModel"
+        />
+        <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)" class="validation-error">
+          El nombre de la receta es obligatorio.
+        </div>
+      </div>
+
+      <!-- Fila de Descripción Corta -->
+      <div class="form-group">
+        <label for="descripcion">Descripción Breve <span class="required">*</span></label>
+        <textarea 
+          id="descripcion" 
+          name="descripcion" 
+          [(ngModel)]="descripcion" 
+          required
+          rows="3" 
+          placeholder="Escribe una breve introducción que describa el plato..."
+          class="form-control"
+          #descInput="ngModel"
+        ></textarea>
+        <div *ngIf="descInput.invalid && (descInput.dirty || descInput.touched)" class="validation-error">
+          La descripción es obligatoria para dar contexto de la receta.
+        </div>
+      </div>
+
+      <!-- Fila doble: Categoría y Tiempo de Preparación -->
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="categoria">Categoría</label>
+          <select 
+            id="categoria" 
+            name="categoria" 
+            [(ngModel)]="categoria" 
+            class="form-control"
+          >
+            <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="tiempoPreparacion">Tiempo de Preparación (minutos) <span class="required">*</span></label>
+          <input 
+            type="number" 
+            id="tiempoPreparacion" 
+            name="tiempoPreparacion" 
+            [(ngModel)]="tiempoPreparacion" 
+            required 
+            min="1" 
+            placeholder="Ej. 45"
+            class="form-control"
+            #tiempoInput="ngModel"
+          />
+          <div *ngIf="tiempoInput.invalid && (tiempoInput.dirty || tiempoInput.touched)" class="validation-error">
+            El tiempo debe ser un número entero mayor que 0.
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila de URL de Imagen -->
+      <div class="form-group">
+        <label for="imagenUrl">Enlace de Imagen (Opcional)</label>
+        <input 
+          type="url" 
+          id="imagenUrl" 
+          name="imagenUrl" 
+          [(ngModel)]="imagenUrl" 
+          placeholder="Ej. https://images.unsplash.com/... (deja en blanco para usar una genérica)"
+          class="form-control"
+        />
+        <p class="helper-text">Inserta un enlace HTTP/HTTPS directo a una fotografía del plato terminado.</p>
+      </div>
+
+      <!-- Ingredientes -->
+      <div class="form-group">
+        <label for="ingredientes">Ingredientes <span class="required">*</span></label>
+        <textarea 
+          id="ingredientes" 
+          name="ingredientes" 
+          [(ngModel)]="ingredientesInput" 
+          required
+          rows="6" 
+          placeholder="Ej.
+3 dientes de ajo
+500g de pasta para lasaña
+1/2 taza de queso parmesano..."
+          class="form-control"
+        ></textarea>
+        <p class="helper-text">Ingresa los ingredientes detallados con sus porciones. <strong>Escribe una sola opción por cada línea.</strong></p>
+      </div>
+
+      <!-- Instrucciones de Preparación -->
+      <div class="form-group">
+        <label for="instrucciones">Pasos de Preparación <span class="required">*</span></label>
+        <textarea 
+          id="instrucciones" 
+          name="instrucciones" 
+          [(ngModel)]="instruccionesInput" 
+          required
+          rows="6" 
+          placeholder="Ej.
+Precalentar el horno a 180°C.
+Hervir las láminas de pasta en agua con sal por 8 minutos.
+Armar las capas intercalando pasta, carne y queso..."
+          class="form-control"
+        ></textarea>
+        <p class="helper-text">Detalla los pasos de preparación en orden cronológico. <strong>Escribe un solo paso por cada línea.</strong></p>
+      </div>
+
+      <!-- Checkbox de Favorito -->
+      <div class="form-group-checkbox">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            name="esFavorita" 
+            [(ngModel)]="esFavorita"
+          />
+          <span class="checkbox-text">Marcar esta receta como Favorita</span>
+        </label>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="recetaForm.invalid"
+        >
+          {{ esEdicion ? 'Actualizar Receta' : 'Guardar Receta' }}
+        </button>
+        <a routerLink="/inicio" class="btn btn-outline-secondary">Cancelar</a>
+      </div>
+
+    </form>
+  </div>
+</div>

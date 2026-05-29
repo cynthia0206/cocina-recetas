@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial Paso a Paso - Gestor de Recetas en Angular</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #2d3748;
+      background-color: #f7fafc;
+      line-height: 1.6;
+      margin: 0;
+      padding: 40px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 50px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    h1 {
+      color: #2c3e50;
+      font-size: 2.2rem;
+      border-bottom: 3px solid #e67e22;
+      padding-bottom: 12px;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+    
+    h2 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 8px;
+    }
+    
+    h3 {
+      color: #e67e22;
+      font-size: 1.15rem;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      margin-bottom: 16px;
+      color: #4a5568;
+    }
+    
+    ul, ol {
+      margin-bottom: 20px;
+      padding-left: 25px;
+      color: #4a5568;
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    code {
+      font-family: Consolas, Monaco, 'Andale Mono', monospace;
+      background-color: #f1f5f9;
+      color: #d53f8c;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      font-family: Consolas, Monaco, 'Andale Mono', monospace;
+      background-color: #1a202c;
+      color: #f7fafc;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.9rem;
+    }
+    
+    .badge {
+      background-color: #feebc8;
+      color: #c05621;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+    
+    .note-box {
+      background-color: #fffaf0;
+      border-left: 5px solid #dd6b20;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .note-box p {
+      margin: 0;
+      color: #dd6b20;
+      font-weight: 500;
+    }
+    
+    .command-list {
+      background-color: #f7fafc;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    
+    .command-list dt {
+      font-weight: 700;
+      color: #2d3748;
+      margin-top: 10px;
+    }
+    
+    .command-list dd {
+      margin-left: 20px;
+      margin-bottom: 10px;
+      color: #718096;
+    }
+    
+    @media print {
+      body {
+        background-color: #ffffff;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      pre {
+        background-color: #f7fafc;
+        color: #2d3748;
+        border: 1px solid #cbd5e0;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Guía Paso a Paso: Creación del Gestor de Recetas en Angular</h1>
+    
+    <p>Esta guía detalla minuciosamente todo el proceso realizado para construir la aplicación <strong>GourmetApp</strong>, un gestor de recetas culinarias desarrollado en <strong>Angular</strong> (versión moderna standalone) con persistencia en <code>localStorage</code>.</p>
+    
+    <div class="note-box">
+      <p>⚠️ RÚBRICA ACADÉMICA APLICADA: De acuerdo a los requerimientos indicados, el proyecto se ha configurado utilizando el formato clásico de nombrado de archivos de Angular (ej. <code>lista-recetas.component.ts</code>) en lugar de la guía moderna reducida del 2025. Además, la interfaz se estructuró con un diseño centrado de ancho fijo de 1100px para pantallas de escritorio, omitiendo el comportamiento fluido móvil a petición expresa.</p>
+    </div>
+
+    <h2>📋 Requisitos Previos</h2>
+    <ul>
+      <li><strong>Node.js</strong> instalado (versión utilizada en el desarrollo: <code>v24.14.1</code>).</li>
+      <li><strong>npm</strong> instalado (versión utilizada en el desarrollo: <code>11.11.0</code>).</li>
+    </ul>
+
+    <h2>🛠️ Paso 1: Inicialización del Proyecto Angular</h2>
+    <p>Para iniciar el proyecto en la carpeta de trabajo actual, se ejecutó el siguiente comando desde la consola de terminal:</p>
+    <pre><code>npx -y @angular/cli@latest new recetas-app --directory ./ --routing true --style css --ssr false --standalone true --file-name-style-guide 2016 --defaults --force</code></pre>
+    
+    <h3>Explicación de las banderas del comando:</h3>
+    <dl class="command-list">
+      <dt><code>--directory ./</code></dt>
+      <dd>Especifica que el espacio de trabajo de Angular debe crearse directamente en la carpeta actual, evitando crear una subcarpeta adicional y manteniendo ordenados los archivos.</dd>
+      
+      <dt><code>--routing true</code></dt>
+      <dd>Configura automáticamente el archivo <code>src/app/app.routes.ts</code> para permitir la navegación de una sola página (SPA).</dd>
+      
+      <dt><code>--style css</code></dt>
+      <dd>Define el uso de hojas de estilo CSS estándar para dar formato personalizado a la aplicación.</dd>
+      
+      <dt><code>--ssr false</code></dt>
+      <dd>Desactiva Server-Side Rendering (SSR). Esto es ideal para una entrega académica simple basada enteramente en el navegador del cliente.</dd>
+      
+      <dt><code>--standalone true</code></dt>
+      <dd>Utiliza el estándar moderno de Angular basado en componentes autónomos (Standalone Components), evitando tener que registrar componentes en ficheros pesados <code>AppModule</code>.</dd>
+      
+      <dt><code>--file-name-style-guide 2016</code></dt>
+      <dd>Fuerza a la CLI a generar archivos con la terminación tradicional del tipo de elemento (ej: <code>app.component.ts</code> y <code>lista-recetas.component.ts</code>), lo cual suele ser la convención de evaluación docente.</dd>
+      
+      <dt><code>--defaults --force</code></dt>
+      <dd>Deshabilita las preguntas en consola para que se inicialice con configuraciones seguras por defecto, forzando la creación en el directorio de trabajo actual.</dd>
+    </dl>
+
+    <h2>🗂️ Paso 2: Creación del Modelo de Datos <code>Receta</code></h2>
+    <p>Se estructuró una interfaz TypeScript que define los campos obligatorios y opcionales para cada receta culinaria.</p>
+    <p>Archivo creado: <code>src/app/models/receta.model.ts</code></p>
+    <pre><code>export interface Receta {
+  id: string; // ID único generado dinámicamente
+  nombre: string; // Título de la receta
+  descripcion: string; // Descripción breve o introducción
+  ingredientes: string[]; // Lista de ingredientes
+  instrucciones: string[]; // Lista de pasos de preparación
+  tiempoPreparacion: number; // Duración en minutos
+  categoria: string; // Desayuno, Entrada, Almuerzo, Cena, Postre, etc.
+  esFavorita: boolean; // Estado de favorito
+  imagenUrl?: string; // Enlace web de imagen del plato (opcional)
+}</code></pre>
+
+    <h2>💾 Paso 3: Servicio de Datos: <code>RecetaService</code></h2>
+    <p>El servicio centraliza todas las operaciones de almacenamiento y persistencia mediante el navegador.</p>
+    <p>Archivo creado: <code>src/app/services/receta.service.ts</code></p>
+    <ul>
+      <li><strong>Mock Data inicial:</strong> Si el programa se abre por primera vez y el <code>localStorage</code> está vacío, se insertan automáticamente 3 recetas de demostración muy atractivas (Tacos al Pastor, Tarta de Manzana y Ensalada César).</li>
+      <li><strong>Persistencia Local:</strong> Mediante <code>localStorage.setItem()</code> y <code>localStorage.getItem()</code> los datos de las recetas se guardan de forma permanente en el navegador del usuario y no se pierden al recargar la pestaña.</li>
+      <li><strong>CRUD Completo:</strong> Proporciona métodos para listar (<code>getRecetas()</code>), buscar por ID (<code>getRecetaById()</code>), agregar nuevas recetas (<code>agregarReceta()</code>), editar registros existentes (<code>actualizarReceta()</code>), eliminar recetas (<code>eliminarReceta()</code>) y cambiar el estado favorito (<code>toggleFavorito()</code>).</li>
+    </ul>
+
+    <h2>🧱 Paso 4: Generación de Componentes</h2>
+    <p>Para construir la interfaz y organizar el código modularmente de acuerdo a los requisitos, se ejecutaron los comandos de generación de componentes:</p>
+    <pre><code>npx ng g c lista-recetas --skip-tests
+npx ng g c form-receta --skip-tests
+npx ng g c detalle-receta --skip-tests</code></pre>
+    <p><em>(El parámetro <code>--skip-tests</code> evita la creación de archivos de pruebas unitarias <code>spec.ts</code>, agilizando el mantenimiento del código).</em></p>
+
+    <h2>🚦 Paso 5: Configuración de Rutas (Routing)</h2>
+    <p>Se modificó el archivo <code>src/app/app.routes.ts</code> para mapear la navegación entre secciones:</p>
+    <pre><code>import { Routes } from '@angular/router';
+import { ListaRecetasComponent } from './lista-recetas/lista-recetas.component';
+import { FormRecetaComponent } from './form-receta/form-receta.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'inicio', component: ListaRecetasComponent },
+  { path: 'agregar', component: FormRecetaComponent },
+  { path: 'editar/:id', component: FormRecetaComponent },
+  { path: 'favoritos', component: ListaRecetasComponent },
+  { path: '**', redirectTo: 'inicio' }
+];</code></pre>
+
+    <h2>💻 Paso 6: Lógica y Plantillas de los Componentes</h2>
+    
+    <h3>1. Componente <code>lista-recetas</code></h3>
+    <p>Este componente se encarga de renderizar la cuadrícula de recetas culinarias.</p>
+    <ul>
+      <li><strong>Uso de directivas:</strong> Emplea <code>*ngFor</code> para iterar sobre la lista de recetas filtradas y mostrarlas en tarjetas. Utiliza <code>*ngIf</code> para renderizar vistas vacías cuando no hay resultados de búsqueda o no se han marcado recetas favoritas.</li>
+      <li><strong>Búsqueda Integrada:</strong> A través de un enlace de doble vía (<code>ngModel</code>), detecta el texto en la barra de búsqueda y filtra al instante por nombre, categoría o ingredientes.</li>
+      <li><strong>Ruta compartida:</strong> Reutiliza la misma plantilla para las rutas de Inicio y Favoritos, alternando los filtros en base a si el URL del navegador incluye la palabra "favoritos".</li>
+    </ul>
+
+    <h3>2. Componente <code>form-receta</code></h3>
+    <p>Formulario para registrar o editar información culinaria.</p>
+    <ul>
+      <li><strong>Formulario Dinámico:</strong> Evalúa la ruta para detectar si tiene una variable <code>id</code>. Si existe, cambia a modo "Edición" y precarga los campos con los datos de la receta para modificarlos. Si no, se inicializa como un formulario de "Creación".</li>
+      <li><strong>Área de Texto Inteligente:</strong> Para facilitar la escritura del usuario, las listas de ingredientes e instrucciones se ingresan en cuadros de texto multilínea (un elemento por línea). Al guardar, el componente los formatea a un arreglo de cadenas <code>string[]</code> mediante funciones <code>split('\n')</code> y <code>trim()</code>.</li>
+    </ul>
+
+    <h3>3. Componente <code>detalle-receta</code></h3>
+    <p>Ventana emergente (modal) de preparación.</p>
+    <ul>
+      <li><strong>Superposición Modal:</strong> Se abre directamente sobre la pantalla actual sin interrumpir la experiencia de navegación del usuario.</li>
+      <li><strong>Función Premium:</strong> Permite tachar ingredientes interactivos. Al pulsar un ingrediente, cambia su estilo visual con una línea que lo tacha, ayudando al cocinero a controlar sus preparativos e ingredientes reunidos.</li>
+    </ul>
+
+    <h2>🎨 Paso 7: Diseño y Estilos de Escritorio Fijos</h2>
+    <ul>
+      <li><strong>App Layout:</strong> Se estructuró un cabezal fijo (Navbar) con enlaces dinámicos para navegar a "Inicio", "Agregar receta" y "Favoritos", aplicando estados activos visuales de color naranja cálido.</li>
+      <li><strong>Ancho Fijo Centrado:</strong> Siguiendo el requerimiento de omitir comportamiento responsivo, el contenido se estructuró con un ancho fijo de <code>1100px</code> centrado horizontalmente en la pantalla (<code>max-width: 1100px; margin: 0 auto;</code>).</li>
+      <li><strong>Tipografía Global:</strong> Se aplicó la fuente moderna <strong>Poppins</strong> en todo el proyecto a través de su importación global en <code>src/styles.css</code>.</li>
+    </ul>
+
+    <h2>🚀 Paso 8: Cómo Ejecutar y Probar el Proyecto</h2>
+    <ol>
+      <li>Abre la consola de comandos en el directorio del proyecto (<code>c:\CYNTHIA\recetas</code>).</li>
+      <li>Ejecuta el servidor de desarrollo local:
+        <pre><code>npm run start</code></pre>
+        <em>(Esto es el equivalente directo a ejecutar <code>npx ng serve</code>).</em>
+      </li>
+      <li>Abre un navegador de internet (Chrome, Edge o Firefox) e ingresa a la siguiente URL:
+        <pre><code>http://localhost:4200</code></pre>
+      </li>
+      <li>Podrás ver el recetario funcionando completamente con recetas precargadas y persistencia activa.</li>
+    </ol>
+  </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<div class="modal-overlay" (click)="cerrarModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    
+    <!-- Encabezado del modal -->
+    <div class="modal-header">
+      <div class="modal-title-wrapper">
+        <span class="modal-badge">{{ receta?.categoria }}</span>
+        <h2>{{ receta?.nombre }}</h2>
+      </div>
+      <button class="close-btn" (click)="cerrarModal()" title="Cerrar modal">&times;</button>
+    </div>
+
+    <!-- Cuerpo del modal -->
+    <div class="modal-body" *ngIf="receta">
+      
+      <!-- Fila superior: Imagen y Datos Rápidos -->
+      <div class="modal-top-section">
+        <div class="modal-image-wrapper">
+          <img 
+            [src]="receta.imagenUrl || 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=500&auto=format&fit=crop&q=60'" 
+            [alt]="receta.nombre" 
+            class="modal-image"
+            onerror="this.src='https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=500&auto=format&fit=crop&q=60'"
+          />
+        </div>
+        
+        <div class="modal-quick-info">
+          <h3>Descripción</h3>
+          <p class="description-text">{{ receta.descripcion }}</p>
+          
+          <div class="quick-meta">
+            <div class="meta-card-item">
+              <span class="meta-card-label">Preparación</span>
+              <span class="meta-card-value">{{ receta.tiempoPreparacion }} minutos</span>
+            </div>
+            <div class="meta-card-item">
+              <span class="meta-card-label">Ingredientes</span>
+              <span class="meta-card-value">{{ receta.ingredientes.length }} elementos</span>
+            </div>
+            <div class="meta-card-item">
+              <span class="meta-card-label">Favorita</span>
+              <span class="meta-card-value">{{ receta.esFavorita ? 'Sí, en favoritos' : 'No en favoritos' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila inferior: Columnas de Ingredientes e Instrucciones -->
+      <div class="modal-grid-details">
+        
+        <!-- Columna de Ingredientes (Checklist) -->
+        <div class="ingredients-section">
+          <div class="section-title">
+            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <h3>Ingredientes necesarios</h3>
+          </div>
+          <p class="section-helper">Marca los que ya tienes listos para cocinar:</p>
+          
+          <ul class="ingredients-list">
+            <li 
+              *ngFor="let ingrediente of receta.ingredientes; let i = index" 
+              class="ingredient-item"
+              [class.completed]="ingredientesCompletados[i]"
+              (click)="toggleIngrediente(i)"
+            >
+              <span class="checkbox-mock">
+                <!-- Check SVG si está marcado -->
+                <svg *ngIf="ingredientesCompletados[i]" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="ingredient-text">{{ ingrediente }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Columna de Instrucciones / Preparación -->
+        <div class="instructions-section">
+          <div class="section-title">
+            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <h3>Paso a paso de la preparación</h3>
+          </div>
+          
+          <ol class="instructions-list">
+            <li *ngFor="let instruccion of receta.instrucciones; let i = index" class="instruction-item">
+              <span class="step-number">{{ i + 1 }}</span>
+              <p class="step-text">{{ instruccion }}</p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Pie del modal -->
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+    </div>
+
+  </div>
+</div>

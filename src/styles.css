@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #2d3748;
+  background-color: #f8fafc;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Estilos de Botones Globales */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  outline: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #e67e22;
+  color: #ffffff;
+  border-color: #e67e22;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #d35400;
+  border-color: #d35400;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border-color: #edf2f7;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #e2e8f0;
+  border-color: #e2e8f0;
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  color: #718096;
+  border-color: #cbd5e0;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: #f7fafc;
+  color: #2d3748;
+  border-color: #a0aec0;
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  color: #e53e3e;
+  border-color: #fed7d7;
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+  background-color: #fff5f5;
+  color: #c53030;
+  border-color: #fc8181;
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}

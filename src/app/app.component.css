@@ -1,0 +1,98 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.navbar-content {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.brand-icon {
+  width: 30px;
+  height: 30px;
+  color: #e67e22;
+  margin-right: 12px;
+}
+
+.brand-name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: -0.5px;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: #718096;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 8px 20px;
+  border-radius: 30px;
+  transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+  background-color: #fffaf0;
+  color: #e67e22;
+}
+
+.active-link {
+  background-color: #feebc8;
+  color: #dd6b20;
+}
+
+/* Main Content Area */
+.main-content {
+  flex-grow: 1;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+/* Footer */
+.app-footer {
+  background-color: #1a202c;
+  color: #a0aec0;
+  padding: 24px 0;
+  border-top: 1px solid #2d3748;
+}
+
+.footer-content {
+  width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.2px;
+}

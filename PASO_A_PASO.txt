@@ -1,0 +1,126 @@
+========================================================================
+   GUIA PASO A PASO: CREACION DEL GESTOR DE RECETAS EN ANGULAR
+========================================================================
+
+Esta guia detalla paso a paso todo el proceso realizado para construir la
+aplicacion GourmetApp, un gestor de recetas culinarias desarrollado en
+Angular (version moderna standalone) con persistencia en localStorage.
+
+Nota: De acuerdo a tus requerimientos, se omitio la adaptabilidad responsiva
+movil (se uso un diseño centrado de escritorio de 1100px) y se configuro el
+formato clasico de nombres de archivo de Angular (ej. lista-recetas.component.ts).
+
+------------------------------------------------------------------------
+📋 REQUISITOS PREVIOS
+------------------------------------------------------------------------
+* Node.js instalado (version utilizada: v24.14.1)
+* npm instalado (version utilizada: 11.11.0)
+
+------------------------------------------------------------------------
+🛠️ PASO 1: INICIALIZACION DEL PROYECTO ANGULAR
+------------------------------------------------------------------------
+Para iniciar el proyecto en la carpeta actual, se ejecuto el siguiente comando:
+
+npx -y @angular/cli@latest new recetas-app --directory ./ --routing true --style css --ssr false --standalone true --file-name-style-guide 2016 --defaults --force
+
+Explicacion de los parametros principales:
+* --directory ./ : Crea el proyecto en el directorio actual (sin subcarpetas).
+* --routing true : Configura el modulo y archivos de enrutamiento (app.routes.ts).
+* --style css : Utiliza hojas de estilo CSS estandar.
+* --ssr false : Desactiva Server-Side Rendering para simplificar a Single Page App.
+* --standalone true : Configura el proyecto con componentesStandalone.
+* --file-name-style-guide 2016 : Forza nombres tradicionales de archivos.
+* --defaults --force : Ejecuta sin prompts y sobreescribe de forma segura.
+
+------------------------------------------------------------------------
+🗂️ PASO 2: CREACION DEL MODELO DE DATOS
+------------------------------------------------------------------------
+Definimos la estructura de datos para una receta en TypeScript.
+Archivo: src/app/models/receta.model.ts
+
+export interface Receta {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  ingredientes: string[];
+  instrucciones: string[];
+  tiempoPreparacion: number;
+  categoria: string;
+  esFavorita: boolean;
+  imagenUrl?: string;
+}
+
+------------------------------------------------------------------------
+💾 PASO 3: SERVICIO DE DATOS (RecetaService)
+------------------------------------------------------------------------
+Maneja la logica de negocio y almacena los datos de manera persistente.
+Archivo: src/app/services/receta.service.ts
+
+* Mock Data inicial: Si localStorage esta vacio, precarga 3 recetas
+  (Tacos al Pastor, Tarta de Manzana y Ensalada Cesar) de demostracion.
+* Guardado persistente: Guarda la coleccion de recetas en localStorage en
+  formato JSON con la clave 'recetas_app'. Los cambios no se borran al recargar.
+* CRUD: Ofrece metodos para listar, buscar por ID, agregar, editar, eliminar y
+  alternar el estado favorito de cada receta.
+
+------------------------------------------------------------------------
+🧱 PASO 4: GENERACION DE COMPONENTES
+------------------------------------------------------------------------
+Se ejecutaron los siguientes comandos CLI para generar los componentes:
+
+npx ng g c lista-recetas --skip-tests
+npx ng g c form-receta --skip-tests
+npx ng g c detalle-receta --skip-tests
+
+------------------------------------------------------------------------
+🚦 PASO 5: CONFIGURACION DE RUTAS (Routing)
+------------------------------------------------------------------------
+Se edito el archivo src/app/app.routes.ts para definir la navegacion:
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'inicio', component: ListaRecetasComponent },
+  { path: 'agregar', component: FormRecetaComponent },
+  { path: 'editar/:id', component: FormRecetaComponent },
+  { path: 'favoritos', component: ListaRecetasComponent },
+  { path: '**', redirectTo: 'inicio' }
+];
+
+------------------------------------------------------------------------
+💻 PASO 6: LOGICA Y DETALLE DE COMPONENTES
+------------------------------------------------------------------------
+1. lista-recetas:
+   - Renderiza las tarjetas de recetas usando directivas ngFor y ngIf.
+   - Posee un buscador que filtra por nombre, categoria o ingredientes.
+   - Distingue entre Inicio y Favoritos leyendo el URL (url.includes('favoritos')).
+   - Cuenta con botones para alternar favoritos, borrar o ver preparacion.
+
+2. form-receta:
+   - Funciona para agregar una receta nueva o editar una existente.
+   - En edicion carga los datos anteriores en el formulario basandose en el ID de la ruta.
+   - Los ingredientes y pasos se escriben en textareas (uno por linea) y se dividen
+     en un arreglo (array) string[] de forma automatica en TypeScript mediante split('\n').
+
+3. detalle-receta:
+   - Diseñado como modal/overlay que aparece superpuesto.
+   - Permite marcar/desmarcar de forma interactiva (checklist) los ingredientes a
+     medida que el cocinero los reune para la receta.
+
+------------------------------------------------------------------------
+🎨 PASO 7: DISEÑO DE ESCRITORIO DE ANCHO FIJO (1100px)
+------------------------------------------------------------------------
+* App Layout: Añade un Navbar superior moderno con enlaces activos indicados.
+* Omitir Responsive: El contenedor principal tiene un ancho estatico de 1100px
+  centrado horizontalmente en la pantalla para una correcta visualizacion en monitores
+  de escritorio (max-width: 1100px; margin: 0 auto;).
+* Tipografia y Botones: Carga la tipografia Poppins y define estilos globales en styles.css.
+
+------------------------------------------------------------------------
+🚀 PASO 8: COMO EJECUTAR EL PROYECTO
+------------------------------------------------------------------------
+1. Abre una terminal de comandos en la carpeta raiz (c:\CYNTHIA\recetas).
+2. Arranca el servidor local de Angular:
+   npm run start
+3. En tu navegador de internet, ingresa a la siguiente direccion:
+   http://localhost:4200
+4. Podras utilizar y probar toda la aplicacion en tiempo real.
