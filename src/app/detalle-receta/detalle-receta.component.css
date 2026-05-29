@@ -13,8 +13,8 @@
 }
 
 .modal-card {
-  width: 950px;
-  max-height: 85vh;
+  width: min(95%, 950px);
+  max-height: 90vh;
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
@@ -79,7 +79,7 @@
 
 /* Body */
 .modal-body {
-  padding: 30px;
+  padding: 24px;
   overflow-y: auto;
   flex-grow: 1;
 }
@@ -89,10 +89,12 @@
   display: flex;
   gap: 30px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .modal-image-wrapper {
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   height: 200px;
   border-radius: 12px;
   overflow: hidden;
@@ -127,10 +129,11 @@
 .quick-meta {
   display: flex;
   gap: 15px;
+  flex-wrap: wrap;
 }
 
 .meta-card-item {
-  flex: 1;
+  flex: 1 1 180px;
   background-color: #f7fafc;
   border-radius: 8px;
   padding: 12px;
@@ -301,4 +304,41 @@
 
 .modal-footer .btn {
   padding: 10px 24px;
+}
+
+@media (max-width: 900px) {
+  .modal-card {
+    width: min(95%, 700px);
+    max-height: 95vh;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-top-section {
+    gap: 20px;
+  }
+
+  .modal-grid-details {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .modal-header,
+  .modal-footer {
+    padding: 18px 18px;
+  }
+
+  .modal-card {
+    border-radius: 16px;
+  }
 }
