@@ -7,7 +7,6 @@
     
     <div class="search-bar-container">
       <div class="search-input-wrapper">
-        <!-- Ícono de Lupa SVG -->
         <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -25,7 +24,6 @@
     </div>
   </div>
 
-  <!-- Estado vacío -->
   <div *ngIf="recetasFiltradas.length === 0" class="empty-state">
     <div class="empty-icon-wrapper">
       <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -33,14 +31,13 @@
       </svg>
     </div>
     <h3>No se encontraron recetas</h3>
-    <p *ngIf="searchTerm">No hay recetas que coincidan con la búsqueda "{{ searchTerm }}". Intenta con otra palabra clave.</p>
+    <p *ngIf="searchTerm">No hay recetas que coincidan con esta búsqueda "{{ searchTerm }}". Intenta con otra palabra.</p>
     <p *ngIf="!searchTerm && soloFavoritas">Aún no tienes recetas marcadas como favoritas. ¡Ve a Inicio y añade algunas!</p>
     <p *ngIf="!searchTerm && !soloFavoritas">Tu recetario está vacío. Comienza agregando una nueva receta.</p>
     <a *ngIf="soloFavoritas" routerLink="/inicio" class="btn btn-primary btn-empty">Ver Todas las Recetas</a>
     <a *ngIf="!soloFavoritas && !searchTerm" routerLink="/agregar" class="btn btn-primary btn-empty">Agregar Primera Receta</a>
   </div>
 
-  <!-- Rejilla de recetas -->
   <div *ngIf="recetasFiltradas.length > 0" class="recetas-grid">
     <div *ngFor="let receta of recetasFiltradas" class="receta-card">
       <div class="card-image-wrapper">
@@ -116,7 +113,7 @@
   </div>
 </div>
 
-<!-- Modal de detalle de receta -->
+
 <app-detalle-receta
   *ngIf="recetaSeleccionada"
   [receta]="recetaSeleccionada"
